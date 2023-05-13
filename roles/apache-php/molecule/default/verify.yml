@@ -46,13 +46,13 @@
         state: absent
         
 
-    - name: Stat de la carpeta /usr/bin/php
+    - name: Ejecutar comando para ver version php
       ansible.builtin.command:
         cmd: php --version
       register: php
 
 
-    - name: Comprobar que existe la carpeta /usr/bin/php
+    - name: Comprobar que se esta corriendo la version correcta de PHP
       ansible.builtin.assert:
         that: '"PHP 8" in php.stdout'
         success_msg: "PHP instalado con version {{ php.stdout[4:10]}}"
