@@ -54,8 +54,8 @@
 
     - name: Comprobar que existe la carpeta /usr/bin/php
       ansible.builtin.assert:
-        that: '"PHP 7.4.33" in php.stdout'
+        that: '"PHP 8" in php.stdout'
         success_msg: "PHP instalado con version {{ php.stdout[4:10]}}"
-        fail_msg: "PHP NO estainstalado"
+        fail_msg: "PHP NO esta instalado o no tiene la version correcta {{ php.stdout[4:10]}}"
 
 ...

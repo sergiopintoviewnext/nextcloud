@@ -1,0 +1,1 @@
+propiedad: '{% if ansible_os_family == "Debian" %}www-data{% else %}apache{% endif %}'

@@ -59,5 +59,4 @@
     state: present
     login_unix_socket: "{{ login_socket }}"
   
-
 ...

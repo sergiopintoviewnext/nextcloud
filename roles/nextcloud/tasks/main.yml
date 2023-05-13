@@ -1,0 +1,34 @@
+---
+
+- name: Instalar unzip
+  ansible.builtin.package:
+    name: unzip
+    state: present
+    update_cache: true
+
+
+- name: Descarga y descompresión de Nextcloud
+  ansible.builtin.unarchive:
+    src: https://download.nextcloud.com/server/releases/nextcloud-26.0.1.zip
+    dest: /var/www/html/
+    remote_src: true
+
+
+- name: Crear carpeta data
+  ansible.builtin.file:
+    path: /var/www/html/nextcloud/data
+    owner: "{{ propiedad }}"
+    group: "{{ propiedad }}"
+    mode: '0755'
+    state: directory
+
+
+- name: Cambiar propietario y permisos a carpeta de Nextcloud
+  ansible.builtin.file:
+    path: /var/www/html/nextcloud
+    owner: "{{ propiedad }}"
+    group: "{{ propiedad }}"
+    mode: '0755'
+    recurse: true
+
+...
