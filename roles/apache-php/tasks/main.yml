@@ -1,0 +1,46 @@
+---
+
+- name: Añadir repo Epel y Remi en Rhel
+  when: ansible_os_family == "RedHat"
+  block:
+  - name: Añadir repo Epel y Remi en Rhel
+    ansible.builtin.yum:
+      name: "{{ item }}"
+      state: present
+      disable_gpg_check: true
+    with_items:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+      - https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
+
+  - name: Habilitar modulo php
+    ansible.builtin.command:
+      cmd: "{{ item }}"
+    with_items:
+      - yum module reset -y php
+      - yum module enable -y php:remi-7.4
+    changed_when: false
+
+
+- name: Instalar paquetes
+  ansible.builtin.package:
+    name: "{{ paquetes }}"
+    state: present
+    update_cache: true
+
+
+- name: Iniciar servicio
+  ansible.builtin.service:
+    name: "{{ servicio }}"
+    state: started
+    enabled: true
+
+
+- name: Habilitar firewall en Rhel
+  ansible.posix.firewalld:
+    service: http
+    state: enabled
+    permanent: true
+    immediate: true
+  when: ansible_os_family == "RedHat" 
+
+...
