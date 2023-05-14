@@ -23,7 +23,7 @@
 
 
 
-- name: Instalacion docker y docker compose Debian
+- name: Instalacion docker y docker compose Centos
   when: ansible_os_family == "RedHat"
   block:
   - name: Instalar docker CentOS
