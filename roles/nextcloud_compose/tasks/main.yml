@@ -1,0 +1,27 @@
+---
+
+- name: Crear carpeta para guardar elementos
+  ansible.builtin.file:
+    path: /nextcloud_docker
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+
+
+- name: Copiar docker-compose.yml
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /nextcloud_docker/docker-compose.yml
+    owner: root
+    group: root
+    mode: '0755'
+
+
+- name: Hacer docker compose up del fichero en CentOS
+  ansible.builtin.command:
+    chdir: /nextcloud_docker
+    cmd: docker-compose up -d
+  changed_when: false
+
+...

@@ -4,5 +4,6 @@
   remote_user: root
   roles:
     - role: install_docker
+    - role: nextcloud_compose
 
 ...
