@@ -1,0 +1,6 @@
+[Centos8]
+192.168.0.50 ansible_user=root
+
+
+[Debian]
+192.168.0.51 ansible_user=root

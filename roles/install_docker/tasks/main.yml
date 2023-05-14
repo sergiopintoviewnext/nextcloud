@@ -1,0 +1,47 @@
+---
+
+- name: Instalacion docker y docker compose Debian
+  when: ansible_os_family == "Debian"
+  block:  
+  - name: Instalar docker y docker-compose Debian
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: true
+    with_items:
+      - docker.io
+      - docker-compose
+      - python3-pip
+
+  - name: Instalar requirements para modulo docker compose Debian
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - docker
+      - docker-compose
+
+
+
+- name: Instalacion docker y docker compose Debian
+  when: ansible_os_family == "RedHat"
+  block:
+  - name: Instalar docker CentOS
+    ansible.builtin.yum:
+      name: docker-ce
+      state: present
+      update_cache: true
+
+  - name: Instalar docker-compose CentOS
+    ansible.builtin.shell:
+      cmd: curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+  - name: Dar permisos de ejecucion a docker-compose CentOS
+    ansible.builtin.file:
+      path: /usr/local/bin/docker-compose
+      owner: root
+      group: root
+      mode: '0755'
+      state: file  
+
+...
